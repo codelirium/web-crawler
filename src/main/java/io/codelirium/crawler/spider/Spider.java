@@ -27,7 +27,6 @@ public class Spider {
 
 		while (pagesVisited.size() < MAX_PAGES_TO_SEARCH) {
 
-			final SpiderLeg leg = new SpiderLeg();
 			final String currentUrl;
 
 
@@ -43,6 +42,8 @@ public class Spider {
 
 			}
 
+
+			final SpiderLeg leg = new SpiderLeg();
 
 			if (leg.search(currentUrl, word)) {
 

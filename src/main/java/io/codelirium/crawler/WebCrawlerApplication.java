@@ -27,8 +27,6 @@ public class WebCrawlerApplication implements CommandLineRunner {
 		}
 
 
-		final Spider spider = new Spider();
-
-		spider.search(args[0], args[1]);
+		new Spider().search(args[0], args[1]);
 	}
 }
