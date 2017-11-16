@@ -34,6 +34,7 @@ public class DeepLinkSpiderImpl implements Spider {
 	}
 
 
+	@Override
 	public void search(final String searchTerm) throws IOException {
 
 		notNull(searchTerm, "The search term cannot be null.");
