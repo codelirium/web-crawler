@@ -5,26 +5,44 @@ import org.jsoup.select.Elements;
 import javax.annotation.concurrent.ThreadSafe;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.google.common.collect.Lists.newLinkedList;
 import static java.lang.System.out;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import static java.util.regex.Pattern.compile;
 import static org.springframework.util.Assert.notNull;
 
 
 @ThreadSafe
 public class JSSpiderLeg extends BaseSpiderLeg {
 
-	private static final Pattern JS_LIBRARY_NAME_REGEX               = Pattern.compile("/(.*?)\\.js");
+	private static final Pattern JS_LIBRARY_NAME_REGEX               = compile("/(.*?)\\.js");
 	public  static final String  GOOGLE_RESULT_ANCHOR_LINK_CSS_QUERY = "h3.r > a";
 	public  static final String  SCRIPT_CSS_QUERY                    = "script";
 	public  static final String  SCRIPT_SRC_ATTRIBUTE_KEY            = "src";
+
+	private Connection testConnection;
+
+
+	public JSSpiderLeg() {
+
+		super();
+
+	}
+
+	// User for testing only.
+	JSSpiderLeg(final Connection testJSSpiderLeg) {
+
+		this.testConnection = testJSSpiderLeg;
+
+	}
 
 
 	@Override
@@ -37,11 +55,11 @@ public class JSSpiderLeg extends BaseSpiderLeg {
 
 		try {
 
-			final Optional<Connection> optionalConnection = getOptionalConnection(url);
+			final Optional<Connection> optionalConnection = Objects.isNull(this.testConnection) ? getOptionalConnection(url) : of(this.testConnection);
 
 			if (!optionalConnection.isPresent()) {
 
-				return newLinkedList();
+				return emptyList();
 
 			}
 
@@ -63,13 +81,13 @@ public class JSSpiderLeg extends BaseSpiderLeg {
 
 		} catch(final IOException ioe) {
 
-			return newLinkedList();
+			return emptyList();
 
 		}
 	}
 
 
-	private static Optional<String> extractJSLibraryName(final String jsLibraryPath) {
+	static Optional<String> extractJSLibraryName(final String jsLibraryPath) {
 
 		notNull(jsLibraryPath, "The javascript library path cannot be null.");
 

@@ -10,9 +10,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 
-import static com.google.common.collect.Lists.newLinkedList;
 import static java.lang.Runtime.getRuntime;
 import static java.lang.System.out;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.springframework.util.Assert.notNull;
@@ -39,7 +39,7 @@ public class LinkSpiderLeg extends BaseSpiderLeg {
 
 			if (!optionalConnection.isPresent()) {
 
-				return newLinkedList();
+				return emptyList();
 
 			}
 
@@ -71,7 +71,7 @@ public class LinkSpiderLeg extends BaseSpiderLeg {
 
 		} catch(final IOException ioe) {
 
-			return newLinkedList();
+			return emptyList();
 
 		}
 	}
