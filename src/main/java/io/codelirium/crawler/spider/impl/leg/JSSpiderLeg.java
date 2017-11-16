@@ -5,7 +5,6 @@ import org.jsoup.select.Elements;
 import javax.annotation.concurrent.ThreadSafe;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.regex.Matcher;
@@ -14,6 +13,7 @@ import java.util.regex.Pattern;
 import static java.lang.System.out;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
+import static java.util.Objects.isNull;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static java.util.regex.Pattern.compile;
@@ -55,7 +55,7 @@ public class JSSpiderLeg extends BaseSpiderLeg {
 
 		try {
 
-			final Optional<Connection> optionalConnection = Objects.isNull(this.testConnection) ? getOptionalConnection(url) : of(this.testConnection);
+			final Optional<Connection> optionalConnection = isNull(this.testConnection) ? getOptionalConnection(url) : of(this.testConnection);
 
 			if (!optionalConnection.isPresent()) {
 
