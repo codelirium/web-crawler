@@ -1,32 +1,39 @@
 package io.codelirium.crawler;
 
-import io.codelirium.crawler.spider.Spider;
+import io.codelirium.crawler.spider.impl.GoogleJSSpiderImpl;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+
+import static java.lang.System.out;
+import static org.springframework.boot.Banner.Mode.OFF;
 
 
 @SpringBootApplication
 public class WebCrawlerApplication implements CommandLineRunner {
 
+
 	public static void main(final String... args) {
 
-		SpringApplication.run(WebCrawlerApplication.class, args);
+		new SpringApplicationBuilder(WebCrawlerApplication.class)
+														.logStartupInfo(false)
+														.bannerMode(OFF)
+														.run(args);
 
 	}
 
 	@Override
 	public void run(final String... args) throws InterruptedException {
 
-		if (args.length != 2) {
+		if (args.length != 1) {
 
-			System.out.println("-> Please specify the url and the word to search.");
+			out.println("-> Please specify a single search term.");
 
 
 			return;
 		}
 
 
-		new Spider().search(args[0], args[1]);
+		new GoogleJSSpiderImpl().search(args[0]);
 	}
 }
