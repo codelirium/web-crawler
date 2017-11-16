@@ -58,7 +58,7 @@ public class GoogleJSSpiderImpl implements Spider {
 		notNull(searchTerm, "The search term cannot be null.");
 
 
-		// 1. Get a Google result page from the urlContainsSearchTerm term & 2. Extract main result links from the page.
+		// 1. Get a Google result page from the search term & 2. Extract main result links from the page.
 
 		final LinkSpiderLeg googleLinkSpiderLeg    = isNull(this.testLinkSpiderLeg) ? new LinkSpiderLeg() : this.testLinkSpiderLeg;
 		final List<String> googleSearchResultLinks = googleLinkSpiderLeg
