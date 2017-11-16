@@ -3,7 +3,7 @@ package io.codelirium.crawler.spider.impl;
 import io.codelirium.crawler.spider.Spider;
 import io.codelirium.crawler.spider.annotation.Tarantula;
 import io.codelirium.crawler.spider.impl.leg.LinkSpiderLeg;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -14,25 +14,22 @@ import static io.codelirium.crawler.spider.impl.leg.BaseSpiderLeg.urlContainsSea
 import static io.codelirium.crawler.spider.impl.leg.LinkSpiderLeg.ANCHOR_HREF_ATTRIBUTE_KEY;
 import static io.codelirium.crawler.spider.impl.leg.LinkSpiderLeg.ANCHOR_LINK_CSS_QUERY;
 import static java.lang.System.out;
+import static org.springframework.util.Assert.notEmpty;
 import static org.springframework.util.Assert.notNull;
 
 
 @Tarantula
-@NotThreadSafe
+@ThreadSafe
 public class DeepLinkSpiderImpl implements Spider {
 
-	private String       url;
-	private int          depth;
-	private Set<String>  pagesVisited;
-	private List<String> pagesToVisit;
+	private String url;
+	private int    depth;
 
 
 	public DeepLinkSpiderImpl(final String url, final int depth) {
 
-		this.url          = url;
-		this.depth        = depth;
-		this.pagesVisited = newLinkedHashSet();
-		this.pagesToVisit = newLinkedList();
+		this.url   = url;
+		this.depth = depth;
 
 	}
 
@@ -42,7 +39,10 @@ public class DeepLinkSpiderImpl implements Spider {
 		notNull(searchTerm, "The search term cannot be null.");
 
 
-		while (pagesVisited.size() < depth) {
+		final Set<String>  pagesVisited = newLinkedHashSet();
+		final List<String> pagesToVisit = newLinkedList();
+
+		while (pagesVisited.size() < this.depth) {
 
 			final String currentUrl;
 
@@ -55,7 +55,7 @@ public class DeepLinkSpiderImpl implements Spider {
 
 			} else {
 
-				currentUrl = this.nextUrl();
+				currentUrl = nextUrl(pagesVisited, pagesToVisit);
 
 			}
 
@@ -77,7 +77,12 @@ public class DeepLinkSpiderImpl implements Spider {
 	}
 
 
-	private String nextUrl() {
+	private static String nextUrl(final Set<String> pagesVisited, final List<String> pagesToVisit) {
+
+		notNull(pagesVisited, "The pages visited cannot be null.");
+		notNull(pagesToVisit, "The pages to visit cannot be null.");
+		notEmpty(pagesToVisit, "The pages to visit cannot be empty.");
+
 
 		String nextUrl;
 

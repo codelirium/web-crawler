@@ -64,16 +64,16 @@ public class JSSpiderLeg extends BaseSpiderLeg {
 			}
 
 
-			final Elements jsLibraryStringsOnPage = optionalConnection.get().get().select(cssQuery);
+			final Elements jsLibraryPathsOnPage = optionalConnection.get().get().select(cssQuery);
 
-			out.printf("-> Found (%d) javascript libraries.\n", jsLibraryStringsOnPage.size());
+			out.printf("-> Found (%d) javascript libraries.\n", jsLibraryPathsOnPage.size());
 
 
 			final List<String> jsLibraries = new CopyOnWriteArrayList<>();
 
-			jsLibraryStringsOnPage
+			jsLibraryPathsOnPage
 						.parallelStream()
-								.forEach(jsLibraryString -> extractJSLibraryName(jsLibraryString.absUrl(attributeKey))
+								.forEach(jsLibraryPath -> extractJSLibraryName(jsLibraryPath.absUrl(attributeKey))
 																							.ifPresent(jsLibraries::add));
 
 

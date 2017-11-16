@@ -12,7 +12,7 @@
 
 
 	<name>web-crawler</name>
-	<description>A simple web crawler</description>
+	<description>A simple web crawler which counts top javascript libraries used in web pages found on Google.</description>
 
 	<groupId>io.codelirium.spider</groupId>
 	<artifactId>web-crawler</artifactId>

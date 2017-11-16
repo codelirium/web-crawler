@@ -62,7 +62,7 @@ public abstract class BaseSpiderLeg {
 	public static boolean urlContainsSearchTerm(final String url, final String searchTerm) throws IOException {
 
 		notNull(url, "The url cannot be null.");
-		notNull(searchTerm, "The urlContainsSearchTerm term cannot be null.");
+		notNull(searchTerm, "The search term cannot be null.");
 
 
 		out.printf("Searching for the term: [%s].\n", searchTerm);

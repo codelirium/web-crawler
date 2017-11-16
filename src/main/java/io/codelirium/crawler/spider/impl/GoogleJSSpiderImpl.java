@@ -20,6 +20,7 @@ import static io.codelirium.crawler.spider.impl.leg.JSSpiderLeg.*;
 import static io.codelirium.crawler.spider.impl.leg.LinkSpiderLeg.ANCHOR_HREF_ATTRIBUTE_KEY;
 import static java.lang.Runtime.getRuntime;
 import static java.lang.String.format;
+import static java.lang.System.out;
 import static java.util.Collections.frequency;
 import static java.util.Collections.reverseOrder;
 import static java.util.Map.Entry.comparingByValue;
@@ -111,14 +112,14 @@ public class GoogleJSSpiderImpl implements Spider {
 
 		if (topJSLibraries.size() <= 5) {
 
-			topJSLibraries.parallelStream().forEach(System.out::println);
+			topJSLibraries.parallelStream().forEach(out::println);
 
 		} else {
 
 			newArrayList(topJSLibraries)
 								.subList(0, 5)
 								.parallelStream()
-								.forEach(System.out::println);
+								.forEach(out::println);
 
 		}
 	}
